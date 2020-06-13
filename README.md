@@ -11,3 +11,6 @@ An development utility for serviving local web assets via http, with custom TDL 
 - [ ] Multiple Site Support
 - [ ] Custom Domain Names & TLDs per site (dnsmasq)
 - [ ] Ngrok Integration For Sharing
+- [ ] Linux support
+- [ ] MacOS Support
+- [ ] Windows Support

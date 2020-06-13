@@ -11,8 +11,8 @@ builds:
   main: ./cmd/atto/main.go
   goos:
     - linux
-    - darwin
-    - windows
+#    - darwin
+#    - windows
   goarch:
     - 386
     - amd64
