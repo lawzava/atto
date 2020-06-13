@@ -26,7 +26,7 @@ func New(logLevel Level) *Log {
 }
 
 func (l Log) With(key string, value interface{}) Log {
-	l.arguments = append(l.arguments, fmt.Sprintf("%s: %+v", key, value))
+	l.arguments = append(l.arguments, fmt.Sprintf("{%s: %+v}", key, value))
 	return l
 }
 
@@ -63,6 +63,10 @@ func (l Log) print(logLevel Level, msg ...interface{}) {
 		log.SetPrefix("[ERROR] ")
 
 		defer os.Exit(1)
+	}
+
+	for i := len(l.arguments) - 1; i >= 0; i-- {
+		msg = append([]interface{}{l.arguments[i]}, msg...)
 	}
 
 	log.Println(msg...)

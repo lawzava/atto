@@ -1,7 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"atto/internal/app/atto"
+	"time"
+)
+
+const currentVersion = "v0.1"
 
 func main() {
-	fmt.Println("atto")
+	time.Local = time.UTC
+
+	a := atto.New()
+
+	a.Logger.
+		With("Version", currentVersion).
+		Info("Atto started!")
 }
