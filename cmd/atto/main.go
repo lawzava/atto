@@ -1,4 +1,4 @@
-package atto
+package main
 
 import "fmt"
 
