@@ -8,7 +8,7 @@ import (
 type Daemon struct {
 	Logger *logger.Log
 
-	sites []site
+	sites *[]site
 }
 
 func New(l *logger.Log) (*Daemon, error) {
@@ -19,7 +19,7 @@ func New(l *logger.Log) (*Daemon, error) {
 		return nil, fmt.Errorf("failed to parse sites: %w", err)
 	}
 
-	daemon.sites = sites
+	daemon.sites = &sites
 
 	return &daemon, nil
 }

@@ -8,9 +8,6 @@ import (
 	"syscall"
 )
 
-// Inherit from build variables.
-var currentVersion = "UNKNOWN" // nolint:gochecknoglobals // used for version injection on build
-
 func main() {
 	handleInterrupt()
 
@@ -22,9 +19,7 @@ func main() {
 		exit()
 	}
 
-	log.
-		With("Version", currentVersion).
-		Info("Atto Daemon started!")
+	log.Info("Atto Daemon started!")
 
 	log.Fatal("daemon crashed", d.Start())
 	exit()

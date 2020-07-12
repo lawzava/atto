@@ -12,9 +12,9 @@ type site struct {
 	tls           bool
 }
 
-func handleSites(sites []site) http.HandlerFunc {
+func handleSites(sites *[]site) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		for _, s := range sites {
+		for _, s := range *sites {
 			if r.Host != s.domain {
 				continue
 			}
