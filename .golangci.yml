@@ -70,6 +70,12 @@ linters:
     - godox
     - nolintlint
     - goerr113
+    - exhaustive
+    - exportloopref
+    - gofumpt
+    - goheader
+    - noctx
+    - sqlclosecheck
 
 run:
   timeout: 5m

@@ -1,13 +1,13 @@
-package atto
+package daemon
 
 import "atto/pkg/logger"
 
-type Atto struct {
+type Daemon struct {
 	Logger *logger.Log
 }
 
-func New() *Atto {
+func New() *Daemon {
 	l := logger.New(logger.Info)
 
-	return &Atto{l}
+	return &Daemon{l}
 }
