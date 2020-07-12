@@ -2,21 +2,44 @@ package main
 
 import (
 	"atto/internal/app/daemon"
-	"log"
-	"time"
+	"atto/pkg/logger"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 // Inherit from build variables.
 var currentVersion = "UNKNOWN" // nolint:gochecknoglobals // used for version injection on build
 
 func main() {
-	time.Local = time.UTC
+	handleInterrupt()
 
-	d := daemon.New()
+	log := logger.New(logger.Info)
 
-	d.Logger.
+	d, err := daemon.New(log)
+	if err != nil {
+		log.Fatal("failed to create daemon", err)
+		exit()
+	}
+
+	log.
 		With("Version", currentVersion).
 		Info("Atto Daemon started!")
 
-	log.Fatal(d.Start())
+	log.Fatal("daemon crashed", d.Start())
+	exit()
+}
+
+func handleInterrupt() {
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+
+	go func() {
+		<-c
+		exit()
+	}()
+}
+
+func exit() {
+	os.Exit(0)
 }
