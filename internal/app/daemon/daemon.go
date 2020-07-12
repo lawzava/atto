@@ -2,13 +2,15 @@ package daemon
 
 import (
 	"atto/pkg/logger"
+	"atto/pkg/server"
 	"fmt"
 )
 
 type Daemon struct {
 	Logger *logger.Log
 
-	sites []site
+	server *server.Server
+	sites  []site
 }
 
 func New(l *logger.Log) (*Daemon, error) {
@@ -20,6 +22,8 @@ func New(l *logger.Log) (*Daemon, error) {
 	}
 
 	daemon.sites = sites
+
+	daemon.server = server.New(l)
 
 	return &daemon, nil
 }

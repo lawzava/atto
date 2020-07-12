@@ -9,6 +9,7 @@ import (
 type site struct {
 	absolutePath string
 	domain       string
+	tls          bool
 }
 
 func parseSites() ([]site, error) {
@@ -23,6 +24,7 @@ func parseSites() ([]site, error) {
 	dummySite := site{
 		absolutePath: absolutePath,
 		domain:       "dummy.site",
+		tls:          true,
 	}
 	// ------------
 
