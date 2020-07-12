@@ -12,5 +12,6 @@ func (d *Daemon) Start() error {
 
 	d.Logger.Infof("Server is running on %s port", addr)
 
+	// Serve TLS here as well
 	return http.ListenAndServe(addr, nil)
 }

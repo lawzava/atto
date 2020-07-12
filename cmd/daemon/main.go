@@ -31,6 +31,7 @@ func handleInterrupt() {
 
 	go func() {
 		<-c
+		// Run cleanup functions here
 		exit()
 	}()
 }
