@@ -2,16 +2,31 @@ package daemon
 
 import (
 	"fmt"
+	"net/http"
 	"path/filepath"
-	"strings"
-
-	"github.com/gin-gonic/gin"
 )
 
 type site struct {
 	directoryPath string
 	domain        string
 	tls           bool
+}
+
+func handleSites(sites []site) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		for _, s := range sites {
+			if r.Host != s.domain {
+				continue
+			}
+
+			fs := http.Dir(s.directoryPath)
+			renderFile(w, r, fs)
+
+			return
+		}
+
+		renderNotFound(w, "domain not found")
+	}
 }
 
 func parseSites() ([]site, error) {
@@ -25,7 +40,7 @@ func parseSites() ([]site, error) {
 
 	dummySite := site{
 		directoryPath: directoryPath,
-		domain:        "dummy.site",
+		domain:        "dummy.site" + addr,
 		tls:           true,
 	}
 	// ------------
@@ -33,25 +48,4 @@ func parseSites() ([]site, error) {
 	sites = append(sites, dummySite)
 
 	return sites, nil
-}
-
-func handleSites(sites []site) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		for _, s := range sites {
-			if getDomainName(c.Request.Host) != s.domain {
-				continue
-			}
-
-			fs := gin.Dir(s.directoryPath, false)
-			renderFile(c, fs)
-
-			return
-		}
-
-		renderNotFound(c, "domain not found")
-	}
-}
-
-func getDomainName(host string) string {
-	return strings.Split(host, ":")[0]
 }
