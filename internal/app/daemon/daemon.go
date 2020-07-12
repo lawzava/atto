@@ -2,14 +2,16 @@ package daemon
 
 import (
 	"atto/pkg/logger"
-	"atto/pkg/server"
 	"fmt"
+
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 )
 
 type Daemon struct {
 	Logger *logger.Log
 
-	server *server.Server
+	server *gin.Engine
 	sites  []site
 }
 
@@ -23,7 +25,22 @@ func New(l *logger.Log) (*Daemon, error) {
 
 	daemon.sites = sites
 
-	daemon.server = server.New(l)
+	r := gin.New()
+
+	// CORS
+	if gin.Mode() != gin.ReleaseMode {
+		defaultConfig := cors.DefaultConfig()
+		defaultConfig.AllowAllOrigins = true
+		defaultConfig.AllowHeaders = []string{"*"}
+		r.Use(cors.New(defaultConfig))
+	}
+
+	// Middlewares
+	r.Use(gin.Logger())
+	r.Use(gin.Recovery())
+	r.RedirectFixedPath = true
+
+	daemon.server = r
 
 	return &daemon, nil
 }

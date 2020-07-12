@@ -2,29 +2,28 @@ package daemon
 
 import (
 	"fmt"
-	"os"
 	"path/filepath"
 )
 
 type site struct {
-	absolutePath string
-	domain       string
-	tls          bool
+	directoryPath string
+	domain        string
+	tls           bool
 }
 
 func parseSites() ([]site, error) {
 	var sites []site
 
-	// dummy value for testing
-	absolutePath, err := filepath.Abs(os.Getenv("TEST_SITE_PATH"))
+	// dummy dir for testing
+	directoryPath, err := filepath.Abs("dummysite")
 	if err != nil {
 		return nil, fmt.Errorf("failed to get absolute path: %w", err)
 	}
 
 	dummySite := site{
-		absolutePath: absolutePath,
-		domain:       "dummy.site",
-		tls:          true,
+		directoryPath: directoryPath,
+		domain:        "dummy.site",
+		tls:           true,
 	}
 	// ------------
 
