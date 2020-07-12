@@ -5,15 +5,13 @@ import (
 	"net/http"
 )
 
-const (
-	// Move to config config
-	port = 9182
-)
+// TODO: Move to config.
+const port = 9182
 
 func (d *Daemon) Start() error {
 	e := d.server
 
-	e.Handle(http.MethodGet, "/*filepath", handleStaticFiles("/", d.sites))
+	e.Handle(http.MethodGet, "/*filepath", handleSites(d.sites))
 
 	d.Logger.Infof("Server is running on %d port", port)
 

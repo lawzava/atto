@@ -3,6 +3,9 @@ package daemon
 import (
 	"fmt"
 	"path/filepath"
+	"strings"
+
+	"github.com/gin-gonic/gin"
 )
 
 type site struct {
@@ -30,4 +33,25 @@ func parseSites() ([]site, error) {
 	sites = append(sites, dummySite)
 
 	return sites, nil
+}
+
+func handleSites(sites []site) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		for _, s := range sites {
+			if getDomainName(c.Request.Host) != s.domain {
+				continue
+			}
+
+			fs := gin.Dir(s.directoryPath, false)
+			renderFile(c, fs)
+
+			return
+		}
+
+		renderNotFound(c, "domain not found")
+	}
+}
+
+func getDomainName(host string) string {
+	return strings.Split(host, ":")[0]
 }
