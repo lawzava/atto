@@ -1,16 +1,18 @@
 # atto
 
-An development utility for serviving local web assets via http, with custom TDL support, sharing and SSL.
+An development utility for serviving local web assets via http, with custom TLD support, sharing and SSL.
+
+(a.k.a. valet in Go)
 
 ### TODO:
-- [ ] Static Files Web Server
+- [X] Static Files Web Server
 - [ ] Storage Solution For Persistent Config
-- [ ] Web Server Daemon
+- [X] Web Server Daemon
 - [ ] Hot Reload
 - [ ] CLI Documentation
-- [ ] Multiple Site Support
+- [X] Multiple Site Support
 - [ ] Custom Domain Names & TLDs per site (dnsmasq)
 - [ ] Ngrok Integration For Sharing
-- [ ] Linux support
-- [ ] MacOS Support
+- [X] Linux support
+- [X] MacOS Support
 - [ ] Windows Support
