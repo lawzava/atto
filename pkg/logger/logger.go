@@ -26,12 +26,16 @@ func New(logLevel Level) *Log {
 }
 
 func (l Log) With(key string, value interface{}) Log {
-	l.arguments = append(l.arguments, fmt.Sprintf("{%s: %+v}", key, value))
+	l.arguments = append(l.arguments, fmt.Sprintf("%s: %+v;", key, value))
 	return l
 }
 
 func (l Log) Info(msg string) {
 	l.print(Info, msg)
+}
+
+func (l Log) Infof(msg string, args ...interface{}) {
+	l.print(Info, sprintf(msg, args...))
 }
 
 func (l Log) Warn(msg string) {
@@ -70,4 +74,8 @@ func (l Log) print(logLevel Level, msg ...interface{}) {
 	}
 
 	log.Println(msg...)
+}
+
+func sprintf(msg string, args ...interface{}) string {
+	return fmt.Sprintf(msg, args...)
 }
