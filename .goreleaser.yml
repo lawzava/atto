@@ -8,7 +8,7 @@ builds:
  -
   env:
     - CGO_ENABLED=0
-  main: ./cmd/atto/main.go
+  main: ./cmd/daemon/main.go
   goos:
     - linux
 #    - darwin
